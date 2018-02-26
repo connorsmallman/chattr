@@ -57,10 +57,10 @@ function* read(socket) {
 
 function* write(socket) {
   while (true) {
-    const payload = yield take(SEND_MESSAGE); 
+    const payload = yield take(SEND_MESSAGE);
 
     socket.send(JSON.stringify({
-      event: 'publish_message',
+      event: 'message',
       data
     }));
   }

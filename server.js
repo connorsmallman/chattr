@@ -6,24 +6,23 @@ app.get('/', (req, res) =>
   res.sendFile(__dirname + '/dist/index.html'));
 
 io.on('connection', socket => {
-  socket.on('command', payload => {
-    switch(payload.command) {
-      case 'nick': 
-        socket.broadcast.emit('set_nickname', payload.nickname);
-        break;
-      case 'think':
-        io.emit('think_message', payload.messageId);
-        break;
-      case 'oops':
-        io.emit('delete_message', payload.messageId);
-        break;
-      default:
-        // do nothing 
-        break;
+  socket.on('message', payload => {
+    if (payload.command) {
+      switch(payload.command) {
+        case 'nick': 
+          socket.broadcast.emit('set_nickname', payload.nickname);
+          break;
+        case 'think':
+          io.emit('think_message', payload.messageId);
+          break;
+        case 'oops':
+          io.emit('delete_message', payload.messageId);
+          break;
+        default:
+          // do nothing 
+          break;
+      }
     }
-  });
-
-  socket.on('publish_message', payload => {
     io.emit('broadcast_message', payload);
   });
 
