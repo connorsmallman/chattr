@@ -19,6 +19,7 @@ io.on('connection', socket => {
         break;
       default:
         // do nothing 
+        break;
     }
   });
 
