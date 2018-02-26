@@ -1,5 +1,6 @@
 export const SEND_MESSAGE = '@chattr/messages/SEND_MESSAGE';
 export const NEW_MESSAGE = '@chattr/messages/NEW_MESSAGE';
+export const UPDATE_MESSAGE = '@chattr/messages/UPDATE_MESSAGE';
 export const DELETE_MESSAGE = '@chattr/messages/DELETE_MESSAGE';
 export const HIGHLIGHT_MESSAGE = '@chattr/messages/HIGHLIGHT_MESSAGE';
 
@@ -32,15 +33,36 @@ export function highlightMessage(id) {
  };
 }
 
-export default function reducer(state, action) {
+const defaultState = {
+  id: '',
+  message: '',
+  messages: []
+}
+
+export default function reducer(state = defaultState, action) {
   switch(action.type) {
-    case NEW_MESSAGE: 
-      return [...state, { message: action.message, id: action.id, highlight: false }];
+    case UPDATE_MESSAGE: 
+      return {
+        message: action.message,
+        ...state
+      }
+    case NEW_MESSAGE:
+      return {
+        messages: [...state, { message: action.message, id: action.id, highlight: false }],
+        ...state
+      }
+      return 
     case DELETE_MESSAGE:
-      return state.filter(message => message.id !== action.id);
+      return {
+        ...state,
+        messages: state.filter(message => message.id !== action.id)
+      };
     case HIGHLIGHT_MESSAGE:
-      return state.map(message 
-        => message.id === action.id ? { ...message, highlight: true } : message);
+      return {
+        ...state,
+        messages: state.map(message =>
+          message.id === action.id ? { ...message, highlight: true } : message)
+      };
     default:
       return state;
   }
