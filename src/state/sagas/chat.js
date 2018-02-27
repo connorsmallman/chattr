@@ -1,8 +1,8 @@
 import io from 'socket.io-client';
 import { eventChannel, delay, END } from 'redux-saga';
 import { fork, take, call, put, select, cancel, cancelled } from 'redux-saga/effects';
-import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage } from './modules/messages';
-import { setNickname } from './modules/nickname';
+import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage } from '../modules/messages';
+import { setNickname } from '../modules/nickname';
 
 function connect() {
   const socket = io('http://localhost');

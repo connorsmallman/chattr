@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
-import watchChat from './state/sagas';
+import watchChat from './sagas/chat';
 
 const reducer = compose()(rootReducer);
 const middlewares = [
