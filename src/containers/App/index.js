@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
+import Chat from '../Chat';
 import MessageList from '../../components/MessageList';
-import Chat from '../../components/Chat';
 
 class App extends Component {
   constructor() {
@@ -29,3 +29,5 @@ class App extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

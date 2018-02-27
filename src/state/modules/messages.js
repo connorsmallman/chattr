@@ -35,17 +35,11 @@ export function highlightMessage(id) {
 
 const defaultState = {
   id: '',
-  message: '',
   messages: []
 }
 
 export default function reducer(state = defaultState, action) {
   switch(action.type) {
-    case UPDATE_MESSAGE: 
-      return {
-        message: action.message,
-        ...state
-      }
     case NEW_MESSAGE:
       return {
         messages: [...state, { message: action.message, id: action.id, highlight: false }],
