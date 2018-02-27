@@ -5,7 +5,7 @@ import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage } from '../mo
 import { setNickname } from '../modules/nickname';
 
 function connect() {
-  const socket = io('http://localhost');
+  const socket = io();
   return new Promise((resolve, reject) => {
     socket.on('open', () => resolve(socket));
     socket.on('error', reject);
