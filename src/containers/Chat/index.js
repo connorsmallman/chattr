@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { mapDispatchToProps } from './state';
+import styled from 'styled-components';
+
+const Group = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+`;
+
+const Input = styled.input`
+  border: none;
+  width: 100%;
+  padding: .4rem;
+`;
+
+const Button = styled.button`
+  background: green;
+  border: none;
+  color: white;
+  padding: .4rem .6rem;
+`;
 
 class ChatForm extends Component {
   constructor() {
@@ -27,8 +46,10 @@ class ChatForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleOnSubmit}>
-        <input onChange={this.handleOnChange} value={this.state.value} />
-        <button type={'submit'}>SEND</button>
+        <Group>
+          <Input onChange={this.handleOnChange} value={this.state.value} />
+          <Button type={'submit'}>SEND</Button>
+        </Group>
       </form>
     );
   }

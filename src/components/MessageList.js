@@ -1,10 +1,17 @@
 import React from 'react';
 import Message from './Message';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+`;
 
 export default function MessageList(props) {
   return (
-    <div>
-      {props.messages.map(message => <Message key={message.id} {...message} />)}
-    </div>
+    <Container>
+      {props.messages.map(m => <Message key={m.id} {...m} />)}
+    </Container>
   );
 }

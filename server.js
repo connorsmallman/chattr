@@ -31,8 +31,8 @@ io.on('connection', socket => {
         io.emit('message', JSON.stringify({ 
           event: 'new_message', 
           data: { 
-            id: uuid(), 
-            message: data.message,
+            userId: socket.id, 
+            message: { id: uuid(), text: data.message },
             think: true
           }
         }));
@@ -41,8 +41,8 @@ io.on('connection', socket => {
         io.emit('message', JSON.stringify({ 
           event: 'new_message', 
           data: { 
-            id: uuid(), 
-            message: data.message,
+            userId: socket.id, 
+            message: { id: uuid(), text: data.message },
             think: false
           }
         }));

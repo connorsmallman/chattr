@@ -6,7 +6,6 @@ import { setNickname } from '../modules/nickname';
 
 function connect() {
   const socket = io();
-  console.log(socket);
   return new Promise((resolve, reject) => {
     socket.on('connect', () => resolve(socket));
     socket.on('error', reject);
@@ -34,7 +33,9 @@ function* read(socket) {
 
       switch (event) {
         case 'new_message':
-          yield put(newMessage(data.message, data.id, data.think));
+          const { message, text, userId, think } = data;
+          const owner = userId === socket.id;
+          yield put(newMessage(message.text, message.id, think, owner));
           break;
         case 'set_nickname': 
           yield put(setNickname(data.nickname));

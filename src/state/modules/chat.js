@@ -11,11 +11,12 @@ export function sendMessage(message) {
   };
 }
 
-export function newMessage(message, id, think) {
+export function newMessage(message, id, think, owner) {
   return {
     type: NEW_MESSAGE,
     message,
     id,
+    owner,
     think
   };
 }
@@ -36,7 +37,12 @@ export default function reducer(state = defaultState, action) {
     case NEW_MESSAGE:
       return {
         ...state,
-        messages: [...state.messages, { message: action.message, id: action.id, highlight: action.think }],
+        messages: [...state.messages, { 
+          message: action.message, 
+          id: action.id, 
+          think: action.think,
+          owner: action.owner
+        }],
       }
     case DELETE_MESSAGE:
       const messages = state.messages.pop();
