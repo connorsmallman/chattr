@@ -11,26 +11,19 @@ export function sendMessage(message) {
   };
 }
 
-export function newMessage(message, id) {
+export function newMessage(message, id, think) {
   return {
     type: NEW_MESSAGE,
     message,
-    id
+    id,
+    think
   };
 }
 
-export function deleteMessage(id) {
+export function deleteMessage() {
   return {
-    type: DELETE_MESSAGE,
-    id
+    type: DELETE_MESSAGE
   };
-}
-
-export function highlightMessage(id) {
- return {
-   type: HIGHLIGHT_MESSAGE,
-   id
- };
 }
 
 const defaultState = {
@@ -42,20 +35,14 @@ export default function reducer(state = defaultState, action) {
   switch(action.type) {
     case NEW_MESSAGE:
       return {
-        messages: [...state, { message: action.message, id: action.id, highlight: false }],
-        ...state
+        ...state,
+        messages: [...state.messages, { message: action.message, id: action.id, highlight: action.think }],
       }
-      return 
     case DELETE_MESSAGE:
+      const messages = state.messages.pop();
       return {
         ...state,
-        messages: state.filter(message => message.id !== action.id)
-      };
-    case HIGHLIGHT_MESSAGE:
-      return {
-        ...state,
-        messages: state.map(message =>
-          message.id === action.id ? { ...message, highlight: true } : message)
+        messages: [...messages]
       };
     default:
       return state;

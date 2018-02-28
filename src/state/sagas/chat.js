@@ -1,23 +1,22 @@
 import io from 'socket.io-client';
 import { eventChannel, delay, END } from 'redux-saga';
 import { fork, take, call, put, select, cancel, cancelled } from 'redux-saga/effects';
-import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage } from '../modules/messages';
+import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage } from '../modules/chat';
 import { setNickname } from '../modules/nickname';
 
 function connect() {
   const socket = io();
+  console.log(socket);
   return new Promise((resolve, reject) => {
-    socket.on('open', () => resolve(socket));
+    socket.on('connect', () => resolve(socket));
     socket.on('error', reject);
   });
 }
 
 function subscribe(socket) {
   return eventChannel(emit => {
-    socket.on('broadcast_message', payload => {
-      const { event, data } = JSON.parse(payload);
-      emit({ event, data });
-    });
+    socket.on('message', payload => 
+      emit(JSON.parse(payload)));
 
     socket.on('close', () => emit(END));
     socket.on('error', console.log);
@@ -31,19 +30,17 @@ function* read(socket) {
 
   try {
     while (true) {
-      const payload = yield take(channel);
-      switch (payload.event) {
-        case 'broadcast_message':
-          yield put(newMessage());
+      const { data, event } = yield take(channel);
+
+      switch (event) {
+        case 'new_message':
+          yield put(newMessage(data.message, data.id, data.think));
           break;
         case 'set_nickname': 
-          yield put(setNickname());
+          yield put(setNickname(data.nickname));
           break;
         case 'delete_message':
           yield put(deleteMessage());
-          break;
-        case 'think_message':
-          yield put(highlightMessage());
           break;
         default: break;
       }
@@ -57,12 +54,15 @@ function* read(socket) {
 
 function* write(socket) {
   while (true) {
-    const payload = yield take(SEND_MESSAGE);
+    const { message } = yield take(SEND_MESSAGE);
+    const commands = message.match(/\/(\w+)/ig) || [];
 
-    socket.send(JSON.stringify({
-      event: 'message',
-      data
-    }));
+    const data = {
+      message: commands.length ? message.substr(message.indexOf(' ') + 1) : message,
+      command: commands[0]
+    };
+
+    socket.emit('message', JSON.stringify(data));
   }
 }
 
@@ -74,6 +74,7 @@ function* handleIO(socket) {
 export function* watchChat() {
   try {
     const socket = yield call(connect);
+    console.log(socket);
     yield fork(handleIO, socket);
   } catch (e) {
     // handle disconnection

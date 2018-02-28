@@ -1,6 +1,6 @@
 export function mapStateToProps(state) {
   return {
-    messages: state.messages.messages,
+    messages: state.chat.messages,
     nickname: state.nickname
   };
 }

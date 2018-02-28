@@ -1,4 +1,4 @@
-import { sendMessage } from "../../state/modules/messages";
+import { sendMessage } from "../../state/modules/chat";
 
 export function mapDispatchToProps(dispatch) {
   return {

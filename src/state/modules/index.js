@@ -1,2 +1,2 @@
-export { default as messages } from './messages';
+export { default as chat } from './chat';
 export { default as nickname } from './nickname';
