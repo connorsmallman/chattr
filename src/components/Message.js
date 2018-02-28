@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const MessageContainer = styled.span`
   background: grey;
   border-radius: .5rem .5rem .5rem 0;
-  color: ${props => props.think ? 'grey' : '#333' };
+  color: ${props => props.think ? 'darkgrey' : 'black' };
   margin: .6rem;
   padding: .2rem .4rem;
   position: relative;
