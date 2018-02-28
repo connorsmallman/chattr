@@ -7,10 +7,12 @@ export function setNickname(name) {
   };
 };
 
-export default function reducer(state = '', action) {
+const defaultState = 'unknown';
+
+export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case SET_NICKNAME:
-      return name;
+      return action.name;
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from './state';
+import { mapStateToProps } from './state';
 import Chat from '../Chat';
 import MessageList from '../../components/MessageList';
 
@@ -23,6 +23,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <span>{this.props.name}</span>
         <MessageList messages={this.props.messages} />
         <Chat onSubmit={this.handleSendMessage} onChange={this.handleOnChange} value={this.props.message} />
       </div>
@@ -30,4 +31,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

@@ -18,7 +18,7 @@ io.on('connection', socket => {
         socket.broadcast.emit('message', JSON.stringify({ 
           event: 'set_nickname', 
           data: {
-            nickname: message
+            nickname: data.message
           }
         }));
         break;
