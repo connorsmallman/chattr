@@ -11,12 +11,11 @@ export function sendMessage(message) {
   };
 }
 
-export function newMessage(message, id, think, owner) {
+export function newMessage(message, think, isOwner) {
   return {
     type: NEW_MESSAGE,
     message,
-    id,
-    owner,
+    isOwner,
     think
   };
 }
@@ -39,9 +38,8 @@ export default function reducer(state = defaultState, action) {
         ...state,
         messages: [...state.messages, { 
           message: action.message, 
-          id: action.id, 
           think: action.think,
-          owner: action.owner
+          isOwner: action.isOwner
         }],
       }
     case DELETE_MESSAGE:

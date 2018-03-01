@@ -33,9 +33,8 @@ function* read(socket) {
 
       switch (event) {
         case 'new_message':
-          const { message, text, userId, think } = data;
-          const owner = userId === socket.id;
-          yield put(newMessage(message.text, message.id, think, owner));
+          const { message, isOwner, think } = data;
+          yield put(newMessage(message, think, isOwner));
           break;
         case 'set_nickname': 
           yield put(setNickname(data.nickname));
@@ -56,14 +55,7 @@ function* read(socket) {
 function* write(socket) {
   while (true) {
     const { message } = yield take(SEND_MESSAGE);
-    const commands = message.match(/\/(\w+)/ig) || [];
-
-    const data = {
-      message: commands.length ? message.substr(message.indexOf(' ') + 1) : message,
-      command: commands[0]
-    };
-
-    socket.emit('message', JSON.stringify(data));
+    socket.emit('message', JSON.stringify({ message, userId: socket.id }));
   }
 }
 

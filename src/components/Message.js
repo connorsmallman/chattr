@@ -10,7 +10,7 @@ const MessageContainer = styled.span`
   position: relative;
   width: min-content;
 
-  ${props => props.owner ? 
+  ${props => props.isOwner ? 
     `
     background: lightgreen;
     border-radius: .5rem .5rem 0 .5rem;
@@ -37,6 +37,6 @@ const MessageContainer = styled.span`
 
 export default function Message(props) {
   return (
-    <MessageContainer owner={props.owner} think={props.think}>{props.message}</MessageContainer>
+    <MessageContainer isOwner={props.isOwner} think={props.think}>{props.message}</MessageContainer>
   );
 }

@@ -11,7 +11,7 @@ const Container = styled.div`
 export default function MessageList(props) {
   return (
     <Container>
-      {props.messages.map(m => <Message key={m.id} {...m} />)}
+      {props.messages.map((m, key) => <Message key={key} {...m} />)}
     </Container>
   );
 }

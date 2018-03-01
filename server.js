@@ -13,12 +13,16 @@ io.on('connection', socket => {
   socket.on('message', payload => {
     const data = JSON.parse(payload);
 
-    switch(data.command) {
+    const commands = data.message.match(/\/(\w+)/ig) || [];
+    const message = commands.length ? data.message.substr(data.message.indexOf(' ') + 1) : data.message;
+    const isOwner = socket.id === data.userId;
+
+    switch(commands[0]) {
       case '/nick': 
         socket.broadcast.emit('message', JSON.stringify({ 
           event: 'set_nickname', 
           data: {
-            nickname: data.message
+            nickname: message
           }
         }));
         break;
@@ -31,8 +35,8 @@ io.on('connection', socket => {
         io.emit('message', JSON.stringify({ 
           event: 'new_message', 
           data: { 
-            userId: socket.id, 
-            message: { id: uuid(), text: data.message },
+            isOwner, 
+            message,
             think: true
           }
         }));
@@ -41,8 +45,8 @@ io.on('connection', socket => {
         io.emit('message', JSON.stringify({ 
           event: 'new_message', 
           data: { 
-            userId: socket.id, 
-            message: { id: uuid(), text: data.message },
+            isOwner,
+            message,
             think: false
           }
         }));
