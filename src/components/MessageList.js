@@ -12,6 +12,7 @@ export default function MessageList(props) {
   return (
     <Container>
       {props.messages.map((m, key) => <Message key={key} {...m} />)}
+      {props.participantTyping && <Message message={'...'} isOwner={false} />}
     </Container>
   );
 }

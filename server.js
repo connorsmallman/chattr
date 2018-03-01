@@ -10,6 +10,17 @@ app.get('/', (req, res) =>
 app.use(express.static(process.cwd() + '/dist'));
 
 io.on('connection', socket => {
+  socket.on('activity', payload => {
+    const data = JSON.parse(payload);
+
+    socket.broadcast.emit('message', JSON.stringify({
+      event: 'set_participant_typing',
+      data: {
+        isTyping: data.isTyping
+      }
+    }));
+  });
+
   socket.on('message', payload => {
     const data = JSON.parse(payload);
 

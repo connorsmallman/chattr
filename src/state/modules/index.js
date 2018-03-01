@@ -1,2 +1,2 @@
-export { default as nickname } from './nickname';
+export { default as participant } from './participant';
 export { default as chat } from './chat';

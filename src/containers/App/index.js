@@ -42,7 +42,10 @@ class App extends Component {
       <Container>
         <ChatContainer>
           <span>{this.props.name}</span>
-          <MessageList messages={this.props.messages} />
+          <MessageList 
+            participantTyping={this.props.participantTyping} 
+            messages={this.props.messages} 
+          />
           <ChatForm onSubmit={this.handleSendMessage} onChange={this.handleOnChange} value={this.props.message} />
         </ChatContainer>
       </Container>

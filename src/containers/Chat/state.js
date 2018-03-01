@@ -1,7 +1,8 @@
-import { sendMessage } from "../../state/modules/chat";
+import { sendMessage, sendUserTyping } from '../../state/modules/chat';
 
 export function mapDispatchToProps(dispatch) {
   return {
-    sendMessage: message => dispatch(sendMessage(message))
+    sendMessage: message => dispatch(sendMessage(message)),
+    sendUserTyping: isTyping => dispatch(sendUserTyping(isTyping))
   }
 }

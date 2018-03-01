@@ -31,6 +31,8 @@ class ChatForm extends Component {
 
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.handleOnFocus = this.handleOnFocus.bind(this);
+    this.handleOnBlur = this.handleOnBlur.bind(this);
   }
 
   handleOnChange(e) {
@@ -43,11 +45,24 @@ class ChatForm extends Component {
     this.setState({ value: '' });
   }
 
+  handleOnFocus() {
+    this.props.sendUserTyping(true);
+  }
+
+  handleOnBlur() {
+    this.props.sendUserTyping(false);
+  }
+
   render() {
     return (
       <form onSubmit={this.handleOnSubmit}>
         <Group>
-          <Input onChange={this.handleOnChange} value={this.state.value} />
+          <Input 
+            onChange={this.handleOnChange} 
+            value={this.state.value}
+            onFocus={ this.handleOnFocus } 
+            onBlur={ this.handleOnBlur } 
+          />
           <Button type={'submit'}>SEND</Button>
         </Group>
       </form>

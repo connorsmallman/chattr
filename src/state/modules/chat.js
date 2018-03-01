@@ -1,8 +1,16 @@
-export const SEND_MESSAGE = '@chattr/messages/SEND_MESSAGE';
-export const NEW_MESSAGE = '@chattr/messages/NEW_MESSAGE';
-export const UPDATE_MESSAGE = '@chattr/messages/UPDATE_MESSAGE';
-export const DELETE_MESSAGE = '@chattr/messages/DELETE_MESSAGE';
-export const HIGHLIGHT_MESSAGE = '@chattr/messages/HIGHLIGHT_MESSAGE';
+export const SEND_MESSAGE = '@chattr/chat/SEND_MESSAGE';
+export const NEW_MESSAGE = '@chattr/chat/NEW_MESSAGE';
+export const UPDATE_MESSAGE = '@chattr/chat/UPDATE_MESSAGE';
+export const DELETE_MESSAGE = '@chattr/chat/DELETE_MESSAGE';
+export const HIGHLIGHT_MESSAGE = '@chattr/chat/HIGHLIGHT_MESSAGE';
+export const SEND_USER_TYPING = '@chattr/chat/SEND_USER_TYPING';
+
+export function sendUserTyping(isTyping) {
+  return {
+    type: SEND_USER_TYPING,
+    isTyping
+  };
+}
 
 export function sendMessage(message) {
   return {
@@ -28,7 +36,8 @@ export function deleteMessage() {
 
 const defaultState = {
   id: '',
-  messages: []
+  messages: [],
+  isTyping: false
 }
 
 export default function reducer(state = defaultState, action) {

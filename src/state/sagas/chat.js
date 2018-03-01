@@ -1,8 +1,8 @@
 import io from 'socket.io-client';
 import { eventChannel, delay, END } from 'redux-saga';
 import { fork, take, call, put, select, cancel, cancelled } from 'redux-saga/effects';
-import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage } from '../modules/chat';
-import { setNickname } from '../modules/nickname';
+import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage, SEND_USER_TYPING } from '../modules/chat';
+import { setTyping, setNickname } from '../modules/participant';
 
 function connect() {
   const socket = io();
@@ -42,6 +42,9 @@ function* read(socket) {
         case 'delete_message':
           yield put(deleteMessage());
           break;
+        case 'set_participant_typing':
+          yield put(setTyping(data.isTyping));
+          break;
         default: break;
       }
     }
@@ -52,11 +55,23 @@ function* read(socket) {
   }
 }
 
-function* write(socket) {
+function* writeMessage(socket) {
   while (true) {
     const { message } = yield take(SEND_MESSAGE);
     socket.emit('message', JSON.stringify({ message, userId: socket.id }));
   }
+}
+
+function* writeActivity(socket) {
+  while (true) {
+    const { isTyping } = yield take(SEND_USER_TYPING);
+    socket.emit('activity', JSON.stringify({ isTyping, userId: socket.id }));
+  }
+}
+
+function* write(socket) {
+  const writeMessageFork = yield fork(writeMessage, socket);
+  const writeActivityFork = yield fork(writeActivity, socket);
 }
 
 function* handleIO(socket) {
