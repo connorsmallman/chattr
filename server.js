@@ -57,6 +57,18 @@ io.on('connection', socket => {
           event: 'fade_message'
         }));
         break;
+      case '/countdown':
+        const parts = message.split(' ');
+        const count = parts[0];
+        const url = parts[1];
+        socket.broadcast.emit('message', JSON.stringify({
+          event: 'countdown',
+          data: {
+            count,
+            url
+          }
+        }));
+        break;
       default:
         io.emit('message', JSON.stringify({ 
           event: 'new_message', 

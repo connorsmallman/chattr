@@ -53,6 +53,14 @@ function* read(socket) {
         case 'fade_message':
           yield put(fadeMessage());
           break;
+        case 'countdown': 
+          let count = data.count;
+          while (count > 0) {
+            yield put(newMessage(count, false, false));
+            yield call(delay, 1000);
+            count--;
+          }
+          window.open(data.url);
         case 'set_participant_typing':
           yield put(setTyping(data.isTyping));
           break;
