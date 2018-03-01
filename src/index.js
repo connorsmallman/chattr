@@ -7,8 +7,6 @@ import ChattrApp from './containers/App';
 const app = document.getElementById('app');
 const store = configureStore();
 
-store.subscribe(console.log);
-
 render(
   <Provider store={store}>
     <ChattrApp />

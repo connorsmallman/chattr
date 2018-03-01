@@ -101,7 +101,6 @@ function* handleIO(socket) {
 export function* watchChat() {
   try {
     const socket = yield call(connect);
-    console.log(socket);
     yield fork(handleIO, socket);
   } catch (e) {
     // handle disconnection
