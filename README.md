@@ -18,3 +18,7 @@ yarn start
 ```
 
 open browser localhost:3000
+
+## Time spent 
+
+3 hrs 
