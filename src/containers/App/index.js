@@ -21,6 +21,10 @@ const ChatContainer = styled.div`
   width: 80vh;
 `;
 
+const Nickname = styled.div`
+  text-align: center;
+`;
+
 class App extends Component {
   constructor() {
     super();
@@ -41,7 +45,7 @@ class App extends Component {
     return (
       <Container>
         <ChatContainer>
-          <span>{this.props.name}</span>
+          <Nickname>{this.props.name}</Nickname>
           <MessageList 
             participantTyping={this.props.participantTyping} 
             messages={this.props.messages} 
