@@ -41,8 +41,10 @@ class ChatForm extends Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    this.props.sendMessage(this.state.value);
-    this.setState({ value: '' });
+    if (this.state.value) {
+      this.props.sendMessage(this.state.value);
+      this.setState({ value: '' });
+    }
   }
 
   handleOnFocus() {
@@ -60,8 +62,8 @@ class ChatForm extends Component {
           <Input 
             onChange={this.handleOnChange} 
             value={this.state.value}
-            onFocus={ this.handleOnFocus } 
-            onBlur={ this.handleOnBlur } 
+            onFocus={this.handleOnFocus} 
+            onBlur={this.handleOnBlur} 
           />
           <Button type={'submit'}>SEND</Button>
         </Group>
