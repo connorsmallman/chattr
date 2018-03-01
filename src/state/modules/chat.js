@@ -4,6 +4,7 @@ export const UPDATE_MESSAGE = '@chattr/chat/UPDATE_MESSAGE';
 export const DELETE_MESSAGE = '@chattr/chat/DELETE_MESSAGE';
 export const HIGHLIGHT_MESSAGE = '@chattr/chat/HIGHLIGHT_MESSAGE';
 export const SEND_USER_TYPING = '@chattr/chat/SEND_USER_TYPING';
+export const FADE_MESSAGE = '@chattr/chat/FADE_MESSAGE';
 
 export function sendUserTyping(isTyping) {
   return {
@@ -19,18 +20,25 @@ export function sendMessage(message) {
   };
 }
 
-export function newMessage(message, think, isOwner) {
+export function newMessage(message, think, isOwner, isFaded) {
   return {
     type: NEW_MESSAGE,
     message,
     isOwner,
-    think
+    think,
+    isFaded
   };
 }
 
 export function deleteMessage() {
   return {
     type: DELETE_MESSAGE
+  };
+}
+
+export function fadeMessage() {
+  return {
+    type: FADE_MESSAGE
   };
 }
 
@@ -57,6 +65,14 @@ export default function reducer(state = defaultState, action) {
         ...state,
         messages: [...messages]
       };
+    case FADE_MESSAGE: {
+      const message = state.messages[state.messages.length - 1];
+      const messages = state.messages.pop();
+      return {
+        ...state,
+        messages: [...messages, { ...message, isFaded: true }]
+      };
+    }
     default:
       return state;
   }

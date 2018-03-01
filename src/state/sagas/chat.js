@@ -1,7 +1,15 @@
 import io from 'socket.io-client';
 import { eventChannel, delay, END } from 'redux-saga';
 import { fork, take, call, put, select, cancel, cancelled } from 'redux-saga/effects';
-import { SEND_MESSAGE, newMessage, deleteMessage, highlightMessage, SEND_USER_TYPING } from '../modules/chat';
+import { 
+  SEND_MESSAGE, 
+  SEND_USER_TYPING,
+  fadeMesssage,
+  newMessage, 
+  deleteMessage, 
+  highlightMessage,
+  fadeMessage, 
+} from '../modules/chat';
 import { setTyping, setNickname } from '../modules/participant';
 
 function connect() {
@@ -41,6 +49,9 @@ function* read(socket) {
           break;
         case 'delete_message':
           yield put(deleteMessage());
+          break;
+        case 'fade_message':
+          yield put(fadeMessage());
           break;
         case 'set_participant_typing':
           yield put(setTyping(data.isTyping));

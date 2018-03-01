@@ -9,6 +9,7 @@ const MessageContainer = styled.span`
   padding: .2rem .4rem;
   position: relative;
   width: min-content;
+  opacity: ${props => props.isFaded ? .1 : 1};
 
   ${props => props.isOwner ? 
     `
@@ -37,6 +38,6 @@ const MessageContainer = styled.span`
 
 export default function Message(props) {
   return (
-    <MessageContainer isOwner={props.isOwner} think={props.think}>{props.message}</MessageContainer>
+    <MessageContainer isFaded={props.isFaded} isOwner={props.isOwner} think={props.think}>{props.message}</MessageContainer>
   );
 }

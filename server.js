@@ -52,6 +52,11 @@ io.on('connection', socket => {
           }
         }));
         break;
+      case '/fadelast':
+        io.emit('message', JSON.stringify({
+          event: 'fade_message'
+        }));
+        break;
       default:
         io.emit('message', JSON.stringify({ 
           event: 'new_message', 
