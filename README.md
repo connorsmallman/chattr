@@ -10,3 +10,5 @@ yarn install
 ```
 yarn start
 ```
+
+open browser localhost:3000
